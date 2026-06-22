@@ -145,7 +145,7 @@ export default function TaskManager() {
 
   return (
     <div className="w-full max-w-2xl mx-auto p-6">
-      <div className="bg-[var(--card)] rounded-2xl border border-[var(--border)] shadow-sm overflow-hidden">
+      <div className="bg-[var(--card)] rounded-2xl border border-[var(--border)] shadow-sm">
         {/* Header */}
         <div className="px-5 pt-5 pb-3">
           <h1 className="text-xl font-semibold text-[var(--foreground)]">My Tasks</h1>
