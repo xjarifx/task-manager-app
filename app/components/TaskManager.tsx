@@ -200,7 +200,10 @@ export default function TaskManager() {
           <div className="px-5 py-10 text-center text-sm text-[var(--muted)]">No tasks yet. Add one above!</div>
         ) : (
           <ul>
-            {tasks.map((task) => (
+            {[...tasks].sort((a, b) => {
+              const order: Record<TaskStatus, number> = { IN_PROGRESS: 0, TODO: 1, DONE: 2 };
+              return order[a.status] - order[b.status];
+            }).map((task) => (
               <li key={task.id} className="group border-b border-[var(--border)] last:border-b-0">
                 {editingId === task.id ? (
                   <div className="px-5 py-3">
