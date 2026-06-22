@@ -193,18 +193,22 @@ export default function TaskManager() {
 
         <div className="border-t border-[var(--border)]" />
 
-        {/* Task List */}
         {loading ? (
           <div className="px-5 py-10 text-center text-sm text-[var(--muted)]">Loading tasks...</div>
         ) : tasks.length === 0 ? (
           <div className="px-5 py-10 text-center text-sm text-[var(--muted)]">No tasks yet. Add one above!</div>
         ) : (
-          <ul>
-            {[...tasks].sort((a, b) => {
-              const order: Record<TaskStatus, number> = { IN_PROGRESS: 0, TODO: 1, DONE: 2 };
-              return order[a.status] - order[b.status];
-            }).map((task) => (
-              <li key={task.id} className="group border-b border-[var(--border)] last:border-b-0">
+          <div>
+            {(["IN_PROGRESS", "TODO", "DONE"] as TaskStatus[]).map((status) => {
+              const group = tasks.filter((t) => t.status === status);
+              if (group.length === 0) return null;
+              const label = status === "IN_PROGRESS" ? "In Progress" : status === "TODO" ? "To Do" : "Done";
+              return (
+                <div key={status}>
+                  <div className="px-5 pt-3 pb-1 text-xs font-semibold text-[var(--muted)] uppercase tracking-wider">{label}</div>
+                  <ul>
+            {group.map((task) => (
+              <li key={task.id} className="group">
                 {editingId === task.id ? (
                   <div className="px-5 py-3">
                     <div className="flex items-start gap-3">
@@ -323,6 +327,10 @@ export default function TaskManager() {
               </li>
             ))}
           </ul>
+            </div>
+            );
+            })}
+          </div>
         )}
       </div>
     </div>
